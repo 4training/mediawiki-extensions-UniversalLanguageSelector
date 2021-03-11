@@ -544,6 +544,11 @@
 							quickList: function () {
 								return mw.uls.getFrequentLanguageList();
 							},
+                           
+							// #custom4training: Reduce selectable languages to the following
+							quickList: [],
+							languages: { 'de' : 'Deutsch', 'en' : 'English', 'sq' :'Shqip', 'pl' : 'polski'},
+
 							onReady: function () {
 								loadDisplayAndInputSettings( this );
 							},
