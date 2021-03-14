@@ -39,12 +39,32 @@
 	 * @param {string} language Language code.
 	 */
 	mw.uls.changeLanguage = function ( language ) {
+        // #custom4training
+        var uri = new mw.Uri( window.location.href ),
+            newuri = new mw.Uri(window.location.href),
+            deferred = new $.Deferred();
+        var newlocation = uri.protocol + '://' + uri.getAuthority();
+        if (uri.getRelativePath().substr(0,10) !== '/mediawiki') {      // in the case /mediawiki/index.php?... we don't change the url
+            if (language === 'en') {
+                // manually change url to the "basis" e.g. from Prayer/de to Prayer as it doesn't work otherwise
+                var firstslash = uri.getRelativePath().indexOf('/',1);
+                var lastslash = uri.getRelativePath().lastIndexOf('/');
+                if ((firstslash > 0) && (firstslash === lastslash)) {
+                    newlocation += uri.getRelativePath().substring(0, firstslash);
+                } else {
+                    newlocation += '/Special:MyLanguage' + uri.getRelativePath();
+                }
+            } else {
+                newlocation += '/Special:MyLanguage' + uri.getRelativePath();
+            }
+            newuri = new mw.Uri(newlocation);
+        }
 		var api = new mw.Api();
 
 		function changeLanguageAnon() {
 			if ( mw.config.get( 'wgULSAnonCanChangeLanguage' ) ) {
 				mw.cookie.set( 'language', language );
-				location.reload();
+				window.location.href = newuri.toString();   // #custom4training
 			}
 		}
 
@@ -86,7 +106,7 @@
 				optionvalue: language
 			} );
 		} ).done( function () {
-			location.reload();
+			window.location.href = newuri.toString();   // #custom4training
 		} ).fail( function () {
 			// Setting the option failed. Maybe the user has logged off.
 			// Continue like anonymous user and set cookie.
