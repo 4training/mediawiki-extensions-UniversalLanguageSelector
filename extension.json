@@ -152,7 +152,8 @@
                 "mediawiki.api",
                 "mediawiki.cookie",
                 "mediawiki.storage",
-                "mediawiki.user"
+                "mediawiki.user",
+                "mediawiki.Uri"
             ],
             "localBasePath": "resources",
             "remoteExtPath": "UniversalLanguageSelector/resources"
