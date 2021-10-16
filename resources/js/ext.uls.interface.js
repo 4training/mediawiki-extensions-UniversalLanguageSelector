@@ -53,6 +53,20 @@
 	}
 
 	/**
+	 * For Vector: Check whether the classic Vector or "new" vector ([[mw:Desktop_improvements]]) is enabled based
+	 * on the contents of the page.
+	 * For other skins, check if ULSDisplayInputAndDisplaySettingsInInterlanguage contains the current skin.
+	 *
+	 * @return {bool}
+	 */
+	function isUsingStandaloneLanguageButton() {
+		var skin = mw.config.get( 'skin' );
+		// special handling for Vector. This can be removed when Vector is split into 2 separate skins.
+		return skin === 'vector' ? $( '#p-lang-btn' ).length > 0 :
+			mw.config.get( 'wgULSDisplaySettingsInInterlanguage' );
+	}
+
+	/**
 	 * Add display settings link to the settings bar in ULS
 	 *
 	 * @param {Object} uls The ULS object
@@ -61,27 +75,14 @@
 		var $displaySettings = displaySettings();
 
 		uls.$menu.find( '#uls-settings-block' ).append( $displaySettings );
-
 		// Initialize the trigger
 		$displaySettings.one( 'click', function () {
-			var displaySettingsOptions = {
-					defaultModule: 'display'
-				},
-				ulsPosition = mw.config.get( 'wgULSPosition' ),
-				anonMode = ( mw.user.isAnon() &&
-					!mw.config.get( 'wgULSAnonCanChangeLanguage' ) );
-
-			// If the ULS trigger is shown in the top personal menu,
-			// closing the display settings must show the main ULS
-			// languages list, unless we are in anon mode and thus
-			// cannot show the language list
-			if ( ulsPosition === 'personal' && !anonMode ) {
-				displaySettingsOptions.onClose = function () {
-					uls.show();
-				};
-			}
-			$.extend( displaySettingsOptions, uls.position() );
-			$displaySettings.languagesettings( displaySettingsOptions ).trigger( 'click' );
+			$displaySettings.languagesettings( {
+				defaultModule: 'display',
+				onClose: uls.show.bind( uls ),
+				onPosition: uls.position.bind( uls ),
+				onVisible: uls.hide.bind( uls )
+			} ).trigger( 'click' );
 		} );
 	}
 
@@ -94,20 +95,14 @@
 		var $inputSettings = inputSettings();
 
 		uls.$menu.find( '#uls-settings-block' ).append( $inputSettings );
-
 		// Initialize the trigger
 		$inputSettings.one( 'click', function () {
-			var position = uls.position();
-
 			$inputSettings.languagesettings( {
 				defaultModule: 'input',
-				onClose: function () {
-					uls.show();
-				},
-				top: position.top,
-				left: position.left
+				onClose: uls.show.bind( uls ),
+				onPosition: uls.position.bind( uls ),
+				onVisible: uls.hide.bind( uls )
 			} ).trigger( 'click' );
-
 		} );
 	}
 
@@ -127,7 +122,7 @@
 			ulsPosition = mw.config.get( 'wgULSPosition' );
 
 		$ulsTrigger = ( ulsPosition === 'interlanguage' ) ?
-			$( '.uls-settings-trigger' ) :
+			$( '.uls-settings-trigger, .mw-interlanguage-selector' ) :
 			$( '.uls-trigger' );
 
 		function hideTipsy() {
@@ -233,9 +228,23 @@
 		} );
 	}
 
+	/**
+	 * Adds display and input settings to the ULS dialog after loading their code.
+	 *
+	 * @param {ULS} uls instance
+	 */
+	function loadDisplayAndInputSettings( uls ) {
+		return mw.loader.using( languageSettingsModules ).then( function () {
+			addDisplaySettings( uls );
+			addInputSettings( uls );
+		} );
+	}
+
 	function initInterface() {
 		var $pLang,
 			clickHandler,
+			// T273928: No change to the heading should be made in modern Vector when the language button is present
+			isButton = isUsingStandaloneLanguageButton(),
 			$ulsTrigger = $( '.uls-trigger' ),
 			anonMode = ( mw.user.isAnon() &&
 				!mw.config.get( 'wgULSAnonCanChangeLanguage' ) ),
@@ -243,7 +252,7 @@
 
 		if ( ulsPosition === 'interlanguage' ) {
 			// TODO: Refactor this block
-			// The interlanguage links section
+			// The interlanguage links section.
 			$pLang = $( '#p-lang' );
 			// Add an element near the interlanguage links header
 			$ulsTrigger = $( '<button>' )
@@ -253,7 +262,7 @@
 			// Take care of any other elements with this class.
 			$ulsTrigger = $( '.uls-settings-trigger' );
 
-			if ( !$pLang.find( 'div ul' ).children().length ) {
+			if ( !$pLang.find( 'div ul' ).children().length && isButton ) {
 				// Replace the title of the interlanguage links area
 				// if there are no interlanguage links
 				$pLang.find( 'h3' )
@@ -279,33 +288,34 @@
 				// Initialize the Language settings window
 				languageSettingsOptions = {
 					defaultModule: 'display',
-					onVisible: function () {
-						var caretRadius,
+					onPosition: function () {
+						var caretRadius, top, left,
 							ulsTriggerHeight = this.$element.height(),
 							ulsTriggerWidth = this.$element[ 0 ].offsetWidth,
 							ulsTriggerOffset = this.$element.offset();
-
-						this.$window.addClass( 'callout' );
 
 						// Same as border width in mixins.less, or near enough
 						caretRadius = 12;
 
 						if ( ulsTriggerOffset.left > $( window ).width() / 2 ) {
-							this.left = ulsTriggerOffset.left - this.$window.width() - caretRadius;
+							left = ulsTriggerOffset.left - this.$window.width() - caretRadius;
 							this.$window.removeClass( 'selector-left' ).addClass( 'selector-right' );
 						} else {
-							this.left = ulsTriggerOffset.left + ulsTriggerWidth + caretRadius;
+							left = ulsTriggerOffset.left + ulsTriggerWidth + caretRadius;
 							this.$window.removeClass( 'selector-right' ).addClass( 'selector-left' );
 						}
 
 						// The top of the dialog is aligned in relation to
 						// the middle of the trigger, so that middle of the
 						// caret aligns with it. 16 is trigger icon height in pixels
-						this.top = ulsTriggerOffset.top +
+						top = ulsTriggerOffset.top +
 							( ulsTriggerHeight / 2 ) -
 							( caretRadius + 16 );
 
-						this.position();
+						return { top: top, left: left };
+					},
+					onVisible: function () {
+						this.$window.addClass( 'callout' );
 					}
 				};
 
@@ -355,11 +365,7 @@
 							languages: { 'de' : 'Deutsch', 'en' : 'English', 'sq' :'Shqip', 'pl' : 'polski'},
 
 							onReady: function () {
-								var uls = this;
-								mw.loader.using( languageSettingsModules, function () {
-									addDisplaySettings( uls );
-									addInputSettings( uls );
-								} );
+								loadDisplayAndInputSettings( this );
 							},
 							onSelect: function ( language ) {
 								mw.uls.changeLanguage( language );
@@ -449,32 +455,59 @@
 	}
 
 	/**
-	 * Event handler for the language button
+	 * Load and open ULS for content language selection.
+	 *
+	 * This dialog is primarily for selecting the language of the content, but may also provide
+	 * access to display and input settings if isUsingStandaloneLanguageButton() returns true.
+	 *
 	 * @param {jQuery.Event} ev
 	 */
-	function clickLanguageButton( ev ) {
-		var $target = $( ev.currentTarget );
+	function loadContentLanguageSelector( ev ) {
 		ev.preventDefault();
-		// Load the ULS now.
+
 		mw.loader.using( 'ext.uls.mediawiki' ).then( function () {
+			var $target, parent, languageNodes, standalone, uls;
+
+			$target = $( ev.target );
+			parent = document.querySelectorAll( '.mw-portlet-lang, #p-lang' )[ 0 ];
+			languageNodes = parent ? parent.querySelectorAll( '.interlanguage-link-target' ) : [];
+			standalone = isUsingStandaloneLanguageButton();
+
+			// Setup click handler for ULS
 			launchULS(
 				$target,
-				mw.uls.getInterlanguageListFromNodes(
-					document.querySelectorAll( '#p-lang .interlanguage-link-target' )
-				)
+				mw.uls.getInterlanguageListFromNodes( languageNodes ),
+				// Using this as heuristic for now. May need to reconsider later. Enables
+				// behavior sepcific to compact language links.
+				!standalone
 			);
-			$target.trigger( 'click' );
+
+			// Trigger the click handler to open ULS once ready
+			if ( standalone ) {
+				// Provide access to display and input settings if this entry point is the single point
+				// of access to all language settings.
+				uls = $target.data( 'uls' );
+				loadDisplayAndInputSettings( uls ).always( function () {
+					$target.trigger( 'click' );
+				} );
+			} else {
+				$target.trigger( 'click' );
+			}
 		} );
 	}
-	/**
-	 * Sets up the interlanguage selector button if present
-	 */
-	function initInterlanguageSelector() {
-		// Special handling for Timeless which stops propagation on links in this menu
+
+	/** Setup lazy-loading for content language selector */
+	function initContentLanguageSelectorClickHandler() {
+		// FIXME: In Timeless ULS is embedded in a menu which stops event propagation
 		if ( $( '.sidebar-inner' ).length ) {
-			$( '.sidebar-inner #p-lang' ).one( 'click', '.mw-interlanguage-selector', clickLanguageButton );
+			$( '.sidebar-inner #p-lang' )
+				.one( 'click', '.mw-interlanguage-selector', loadContentLanguageSelector );
 		} else {
-			$( document ).one( 'click', '.mw-interlanguage-selector', clickLanguageButton );
+			// This button may be created by the new Vector skin, or ext.uls.compactlinks module
+			// if there are many languages. Warning: Both this module and ext.uls.compactlinks
+			// module may run simultaneously. Using event delegation to avoid race conditions where
+			// the trigger may be created after this code.
+			$( document ).one( 'click', '.mw-interlanguage-selector', loadContentLanguageSelector );
 		}
 	}
 
@@ -482,7 +515,7 @@
 		initInterface();
 		initTooltip();
 		initIme();
-		initInterlanguageSelector();
+		initContentLanguageSelectorClickHandler();
 	}
 
 	// Early execute of init

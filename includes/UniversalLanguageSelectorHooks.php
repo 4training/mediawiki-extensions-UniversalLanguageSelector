@@ -85,7 +85,14 @@ class UniversalLanguageSelectorHooks {
 		if ( $wgULSCompactLanguageLinksBetaFeature === false ) {
 			// Compact language links is a default feature in this wiki.
 			// Check user preference
-			return $user->getBoolOption( 'compact-language-links' );
+			$services = MediaWikiServices::getInstance();
+			if ( method_exists( $services, 'getUserOptionsLookup' ) ) {
+				// MW 1.35 +
+				return $services->getUserOptionsLookup()
+					->getBoolOption( $user, 'compact-language-links' );
+			} else {
+				return $user->getBoolOption( 'compact-language-links' );
+			}
 		}
 
 		return false;
@@ -348,18 +355,20 @@ class UniversalLanguageSelectorHooks {
 	/**
 	 * Hook: ResourceLoaderGetConfigVars
 	 * @param array &$vars
+	 * @param string $skin
 	 */
-	public static function addConfig( array &$vars ) {
+	public static function addConfig( array &$vars, $skin ) {
 		global $wgULSGeoService,
 			$wgULSIMEEnabled, $wgULSWebfontsEnabled,
 			$wgULSNoWebfontsSelectors,
 			$wgULSAnonCanChangeLanguage,
-			$wgULSEventLogging,
 			$wgULSImeSelectors, $wgULSNoImeSelectors,
 			$wgULSFontRepositoryBasePath,
 			$wgExtensionAssetsPath,
 			$wgInterwikiSortingSortPrepend;
 
+		$extRegistry = ExtensionRegistry::getInstance();
+		$skinConfig = $extRegistry->getAttribute( 'UniversalLanguageSelectorSkinConfig' )[ $skin ] ?? [];
 		// Place constant stuff here (not depending on request context)
 
 		if ( is_string( $wgULSGeoService ) ) {
@@ -369,11 +378,10 @@ class UniversalLanguageSelectorHooks {
 		$vars['wgULSIMEEnabled'] = $wgULSIMEEnabled;
 		$vars['wgULSWebfontsEnabled'] = $wgULSWebfontsEnabled;
 		$vars['wgULSAnonCanChangeLanguage'] = $wgULSAnonCanChangeLanguage;
-		$vars['wgULSEventLogging'] = $wgULSEventLogging
-			&& ExtensionRegistry::getInstance()->isLoaded( 'EventLogging' );
 		$vars['wgULSImeSelectors'] = $wgULSImeSelectors;
 		$vars['wgULSNoImeSelectors'] = $wgULSNoImeSelectors;
 		$vars['wgULSNoWebfontsSelectors'] = $wgULSNoWebfontsSelectors;
+		$vars['wgULSDisplaySettingsInInterlanguage'] = $skinConfig['ULSDisplaySettingsInInterlanguage'] ?? false;
 
 		if ( is_string( $wgULSFontRepositoryBasePath ) ) {
 			$vars['wgULSFontRepositoryBasePath'] = $wgULSFontRepositoryBasePath;

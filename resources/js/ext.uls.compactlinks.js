@@ -131,7 +131,7 @@
 	 * @constructor
 	 * @param {HTMLElement} listElement Interlanguage list element
 	 * @param {Object} [options]
-	 * @param {Number} [options.max] maximum number of languages to show
+	 * @param {number} [options.max] maximum number of languages to show
 	 * in the compacted list. This defaults to DEFAULT_LIST_SIZE.
 	 */
 	function CompactInterlanguageList( listElement, options ) {
@@ -236,8 +236,8 @@
 			getBabelLanguages,
 			getSitePicks,
 			getCommonLanguages,
-			this.getLangsInText,
-			this.getLangsWithBadges,
+			this.getLangsInText.bind( this ),
+			this.getLangsWithBadges.bind( this ),
 			getExtraCommonLanguages,
 			getFinalFallback
 		];
@@ -300,37 +300,11 @@
 	 */
 	CompactInterlanguageList.prototype.getLangsWithBadges = function () {
 		return Array.prototype.map.call(
-			document.querySelectorAll( '#p-lang [class*="badge"] a.interlanguage-link-target' ),
+			this.listElement.querySelectorAll( '[class*="badge"] a.interlanguage-link-target' ),
 			function ( el ) {
 				return mw.uls.convertMediaWikiLanguageCodeToULS( el.lang );
 			}
 		);
-	};
-
-	/**
-	 * Get the list of languages links.
-	 *
-	 * @return {Object} Map of language codes to elements.
-	 */
-	CompactInterlanguageList.prototype.getInterlanguageList = function () {
-		return this.interlanguageList;
-	};
-
-	/**
-	 * Get common languages - the most probable languages predicted by ULS.
-	 *
-	 * @param {string[]} languages Language codes
-	 * @return {string[]} List of all common language codes
-	 */
-	CompactInterlanguageList.prototype.getCommonLanguages = function ( languages ) {
-		if ( this.commonInterlanguageList === null ) {
-			this.commonInterlanguageList = mw.uls.getFrequentLanguageList()
-				.filter( function ( language ) {
-					return languages.indexOf( language ) >= 0;
-				} );
-		}
-
-		return this.commonInterlanguageList;
 	};
 
 	/**
@@ -347,10 +321,13 @@
 	};
 
 	/**
-	 * Add the trigger at the bottom of the language list
+	 * Add the trigger at the bottom of the language list.
+	 *
+	 * Click handler is setup in ext.uls.interface module.
 	 */
 	CompactInterlanguageList.prototype.addTrigger = function () {
 		var trigger = document.createElement( 'button' );
+		// TODO: Should we have a different class name where the CLS styles are attached?
 		trigger.className = 'mw-interlanguage-selector mw-ui-button';
 		trigger.title = mw.message( 'ext-uls-compact-link-info' ).plain();
 		// Use text() because the message needs {{PLURAL:}}
@@ -364,27 +341,27 @@
 	};
 
 	/**
-	 * Performance cost of calling createCompactList(), as of 2018-09-10.
+	 * Performance cost of calling createCompactList(), as of 2021-02-10.
 	 *
 	 * Summary:
-	 * - DOM Queries: 5 + 1N
+	 * - DOM Queries: 5
 	 *   * createCompactList (1 querySelector)
-	 *   * getLangsWithBadges (1N querySelector, 1 querySelectorAll)
-	 *   * getInterlanguageList (1 querySelectorAll)
+	 *   * CompactInterlanguageList constructor (1 querySelectorAll)
+	 *   * getLangsWithBadges (1 querySelectorAll)
 	 *   * getLangsInText (1 querySelectorAll)
 	 *   * hideOriginal (1 querySelectorAll)
 	 * - DOM Writes: 1 + 2N
 	 *   * addTrigger (1 appendChild)
 	 *   * hideOriginal (1N Element.style)
-	 *   * render (1N Element.style)
+	 *   * render (1N Element.style) // N defaults to 9
 	 * - Misc: 1
 	 *   * addTrigger (1 mw.Message#parser)
 	 */
 	function createCompactList() {
 		var listElement, compactList;
-		listElement = document.querySelector( '#p-lang ul' );
+		listElement = document.querySelector( '.mw-portlet-lang ul, #p-lang ul' );
 		if ( !listElement ) {
-			// Not all namespaces/pages/actions have #p-lang.
+			// Not all namespaces will have a list of languages.
 			return;
 		}
 		compactList = new CompactInterlanguageList( listElement );
