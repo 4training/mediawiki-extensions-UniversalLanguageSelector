@@ -1,10 +1,14 @@
 <?php
 /**
- *
  * @author Niklas Laxström
  * @license GPL-2.0-or-later
  * @file
  */
+
+namespace UniversalLanguageSelector;
+
+use FormatJson;
+use Maintenance;
 
 // Standard boilerplate to define $IP
 if ( getenv( 'MW_INSTALL_PATH' ) !== false ) {
@@ -46,5 +50,5 @@ JAVASCRIPT;
 	}
 }
 
-$maintClass = 'CompileFontRepo';
+$maintClass = CompileFontRepo::class;
 require_once RUN_MAINTENANCE_IF_MAIN;

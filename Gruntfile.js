@@ -1,11 +1,11 @@
-/* eslint-env node, es6 */
+'use strict';
+
 module.exports = function ( grunt ) {
-	var conf = grunt.file.readJSON( 'extension.json' );
+	const conf = grunt.file.readJSON( 'extension.json' );
 
 	grunt.loadNpmTasks( 'grunt-banana-checker' );
 	grunt.loadNpmTasks( 'grunt-eslint' );
 	grunt.loadNpmTasks( 'grunt-stylelint' );
-	grunt.loadNpmTasks( 'grunt-svgmin' );
 
 	grunt.initConfig( {
 		eslint: {
@@ -14,15 +14,12 @@ module.exports = function ( grunt ) {
 				fix: grunt.option( 'fix' )
 			},
 			all: [
-				'**/*.{js,json}',
-				'!lib/**',
-				'!resources/js/ext.uls.webfonts.repository.js',
-				'!{vendor,node_modules}/**'
+				'.'
 			]
 		},
 		stylelint: {
 			options: {
-				syntax: 'less'
+				customSyntax: 'postcss-less'
 			},
 			src: [
 				'**/*.css',
@@ -32,46 +29,9 @@ module.exports = function ( grunt ) {
 				'!vendor/**'
 			]
 		},
-		banana: conf.MessagesDirs,
-		// SVG Optimization
-		svgmin: {
-			options: {
-				js2svg: {
-					indent: '\t',
-					pretty: true
-				},
-				multipass: true,
-				plugins: [ {
-					cleanupIDs: false
-				}, {
-					removeDesc: false
-				}, {
-					removeRasterImages: true
-				}, {
-					removeTitle: false
-				}, {
-					removeViewBox: false
-				}, {
-					removeXMLProcInst: false
-				}, {
-					sortAttrs: true
-				} ]
-			},
-			all: {
-				files: [ {
-					expand: true,
-					cwd: 'resources/images',
-					src: [
-						'**/*.svg'
-					],
-					dest: 'resources/images/',
-					ext: '.svg'
-				} ]
-			}
-		}
+		banana: conf.MessagesDirs
 	} );
 
-	grunt.registerTask( 'minify', 'svgmin' );
 	grunt.registerTask( 'test', [ 'eslint', 'stylelint', 'banana' ] );
-	grunt.registerTask( 'default', [ 'minify', 'test' ] );
+	grunt.registerTask( 'default', [ 'test' ] );
 };

@@ -5,7 +5,7 @@
 	"base": "../data/fontrepo/fonts/",
 	"languages": {
 		"adx": [
-			"Jomolhari"
+			"BabelStoneTibetanSlim"
 		],
 		"af": [
 			"system",
@@ -51,10 +51,10 @@
 			"Siyam Rupali"
 		],
 		"bo": [
-			"Jomolhari"
+			"BabelStoneTibetanSlim"
 		],
 		"bod": [
-			"Jomolhari"
+			"BabelStoneTibetanSlim"
 		],
 		"bpy": [
 			"Siyam Rupali"
@@ -104,13 +104,13 @@
 			"OpenDyslexic"
 		],
 		"dre": [
-			"Jomolhari"
+			"BabelStoneTibetanSlim"
 		],
 		"dv": [
 			"FreeFont-Thaana"
 		],
 		"dz": [
-			"Jomolhari"
+			"BabelStoneTibetanSlim"
 		],
 		"en": [
 			"system",
@@ -169,7 +169,7 @@
 			"OpenDyslexic"
 		],
 		"goe": [
-			"Jomolhari"
+			"BabelStoneTibetanSlim"
 		],
 		"got": [
 			"system",
@@ -198,7 +198,7 @@
 			"OpenDyslexic"
 		],
 		"hut": [
-			"Jomolhari"
+			"BabelStoneTibetanSlim"
 		],
 		"id": [
 			"system",
@@ -238,10 +238,10 @@
 			"Pustaka Bali"
 		],
 		"kbg": [
-			"Jomolhari"
+			"BabelStoneTibetanSlim"
 		],
 		"khg": [
-			"Jomolhari"
+			"BabelStoneTibetanSlim"
 		],
 		"km": [
 			"KhmerOSbattambang",
@@ -250,18 +250,22 @@
 			"Nokora Regular",
 			"Suwannaphum"
 		],
+		"ks": [
+			"system",
+			"AwamiNastaliq"
+		],
 		"kte": [
-			"Jomolhari"
+			"BabelStoneTibetanSlim"
 		],
 		"lb": [
 			"system",
 			"OpenDyslexic"
 		],
 		"lbj": [
-			"Jomolhari"
+			"BabelStoneTibetanSlim"
 		],
 		"lhm": [
-			"Jomolhari"
+			"BabelStoneTibetanSlim"
 		],
 		"li": [
 			"system",
@@ -271,13 +275,13 @@
 			"Phetsarath"
 		],
 		"loy": [
-			"Jomolhari"
+			"BabelStoneTibetanSlim"
 		],
 		"luk": [
-			"Jomolhari"
+			"BabelStoneTibetanSlim"
 		],
 		"lya": [
-			"Jomolhari"
+			"BabelStoneTibetanSlim"
 		],
 		"mak": [
 			"Saweri"
@@ -297,7 +301,7 @@
 			"Pustaka Bali"
 		],
 		"muk": [
-			"Jomolhari"
+			"BabelStoneTibetanSlim"
 		],
 		"my": [
 			"TharLon",
@@ -323,10 +327,10 @@
 			"OpenDyslexic"
 		],
 		"ola": [
-			"Jomolhari"
+			"BabelStoneTibetanSlim"
 		],
 		"otb": [
-			"Jomolhari"
+			"BabelStoneTibetanSlim"
 		],
 		"pal": [
 			"Shapour"
@@ -385,10 +389,10 @@
 			"SertoUrhoy"
 		],
 		"tcn": [
-			"Jomolhari"
+			"BabelStoneTibetanSlim"
 		],
 		"thw": [
-			"Jomolhari"
+			"BabelStoneTibetanSlim"
 		],
 		"ti": [
 			"AbyssinicaSIL"
@@ -406,10 +410,11 @@
 			"OpenDyslexic"
 		],
 		"tsk": [
-			"Jomolhari"
+			"BabelStoneTibetanSlim"
 		],
 		"ur": [
 			"system",
+			"AwamiNastaliq",
 			"Hussaini Nastaleeq",
 			"NafeesWeb"
 		],
@@ -418,14 +423,14 @@
 			"OpenDyslexic"
 		],
 		"xct": [
-			"Jomolhari"
+			"BabelStoneTibetanSlim"
 		],
 		"yi": [
 			"system",
 			"Alef"
 		],
 		"zau": [
-			"Jomolhari"
+			"BabelStoneTibetanSlim"
 		]
 	},
 	"fonts": {
@@ -477,6 +482,14 @@
 		"Artaxerxes": {
 			"woff": "Artaxerxes/Artaxerxes.woff?c1ed7",
 			"woff2": "Artaxerxes/Artaxerxes.woff2?7a96e"
+		},
+		"AwamiNastaliq": {
+			"woff": "AwamiNastaliq/AwamiNastaliq-Regular.woff?84ee4",
+			"woff2": "AwamiNastaliq/AwamiNastaliq-Regular.woff2?226c1"
+		},
+		"BabelStoneTibetanSlim": {
+			"woff": "BabelStoneTibetanSlim/BabelStoneTibetanSlim.woff?c48ba",
+			"woff2": "BabelStoneTibetanSlim/BabelStoneTibetanSlim.woff2?46398"
 		},
 		"Boyo Gagrai": {
 			"woff2": "BoyoGagrai/BoyoGagrai.woff2?d1060"
@@ -532,16 +545,29 @@
 			"woff2": "FreeFontThana/FreeFont-Thaana-Bold.woff2?eaf55"
 		},
 		"GentiumPlus": {
-			"woff": "GentiumPlus/GentiumPlus-R.woff?1abc3",
-			"woff2": "GentiumPlus/GentiumPlus-R.woff2?aa576",
+			"woff": "GentiumPlus/GentiumPlus-Regular.woff?7a020",
+			"woff2": "GentiumPlus/GentiumPlus-Regular.woff2?b04c9",
 			"variants": {
+				"bold": "GentiumPlus Bold",
+				"bolditalic": "GentiumPlus Bold Italic",
 				"italic": "GentiumPlus Italic"
 			}
 		},
+		"GentiumPlus Bold": {
+			"fontweight": "bold",
+			"woff": "GentiumPlus/GentiumPlus-Bold.woff?2d222",
+			"woff2": "GentiumPlus/GentiumPlus-Bold.woff2?264f1"
+		},
+		"GentiumPlus Bold Italic": {
+			"fontweight": "bold",
+			"fontstyle": "italic",
+			"woff": "GentiumPlus/GentiumPlus-BoldItalic.woff?e8674",
+			"woff2": "GentiumPlus/GentiumPlus-BoldItalic.woff2?191d0"
+		},
 		"GentiumPlus Italic": {
 			"fontstyle": "italic",
-			"woff": "GentiumPlus/GentiumPlus-I.woff?ab550",
-			"woff2": "GentiumPlus/GentiumPlus-I.woff2?35b11"
+			"woff": "GentiumPlus/GentiumPlus-Italic.woff?14b0e",
+			"woff2": "GentiumPlus/GentiumPlus-Italic.woff2?8cd7c"
 		},
 		"GochiHand": {
 			"woff": "GochiHand/GochiHand-Regular.woff?310cc",
@@ -579,13 +605,9 @@
 			"woff": "IranianSerif/irseri.woff?d153b",
 			"woff2": "IranianSerif/irseri.woff2?2e4dd"
 		},
-		"Jomolhari": {
-			"woff": "Jomolhari/Jomolhari.woff?3a60b",
-			"woff2": "Jomolhari/Jomolhari.woff2?f448a"
-		},
 		"Junicode": {
-			"woff": "Junicode/Junicode.woff?dc7ef",
-			"woff2": "Junicode/Junicode.woff2?7e6d6",
+			"woff": "Junicode/Junicode.woff?19f4e",
+			"woff2": "Junicode/Junicode.woff2?1a244",
 			"variants": {
 				"bold": "Junicode Bold",
 				"bolditalic": "Junicode Bold Italic",
@@ -594,19 +616,19 @@
 		},
 		"Junicode Bold": {
 			"fontweight": "bold",
-			"woff": "Junicode/Junicode-Bold.woff?f7ef4",
-			"woff2": "Junicode/Junicode-Bold.woff2?d5d04"
+			"woff": "Junicode/Junicode-Bold.woff?c77c1",
+			"woff2": "Junicode/Junicode-Bold.woff2?94fed"
 		},
 		"Junicode Bold Italic": {
 			"fontweight": "bold",
 			"fontstyle": "italic",
-			"woff": "Junicode/Junicode-BoldItalic.woff?3cec9",
-			"woff2": "Junicode/Junicode-BoldItalic.woff2?80351"
+			"woff": "Junicode/Junicode-BoldItalic.woff?23d9c",
+			"woff2": "Junicode/Junicode-BoldItalic.woff2?4f1cd"
 		},
 		"Junicode Italic": {
 			"fontstyle": "italic",
-			"woff": "Junicode/Junicode-Italic.woff?c458b",
-			"woff2": "Junicode/Junicode-Italic.woff2?3fe39"
+			"woff": "Junicode/Junicode-Italic.woff?66b80",
+			"woff2": "Junicode/Junicode-Italic.woff2?b2597"
 		},
 		"Kadiri": {
 			"woff": "Kadiri/Kadiri.woff?98297",
@@ -702,8 +724,8 @@
 			"woff2": "NuosuSIL/NuosuSIL.woff2?223bb"
 		},
 		"OpenDyslexic": {
-			"woff": "OpenDyslexic/OpenDyslexic-Regular.woff?7a21f",
-			"woff2": "OpenDyslexic/OpenDyslexic-Regular.woff2?104a3",
+			"woff": "OpenDyslexic/OpenDyslexic-Regular.woff?e7081",
+			"woff2": "OpenDyslexic/OpenDyslexic-Regular.woff2?209dd",
 			"variants": {
 				"bold": "OpenDyslexic Bold",
 				"bolditalic": "OpenDyslexic BoldItalic",
@@ -712,19 +734,19 @@
 		},
 		"OpenDyslexic Bold": {
 			"fontweight": "bold",
-			"woff": "OpenDyslexic/OpenDyslexic-Bold.woff?75b90",
-			"woff2": "OpenDyslexic/OpenDyslexic-Bold.woff2?42307"
+			"woff": "OpenDyslexic/OpenDyslexic-Bold.woff?cfd3b",
+			"woff2": "OpenDyslexic/OpenDyslexic-Bold.woff2?df553"
 		},
 		"OpenDyslexic BoldItalic": {
 			"fontweight": "bold",
 			"fontstyle": "italic",
-			"woff": "OpenDyslexic/OpenDyslexic-BoldItalic.woff?570d3",
-			"woff2": "OpenDyslexic/OpenDyslexic-BoldItalic.woff2?12f7e"
+			"woff": "OpenDyslexic/OpenDyslexic-BoldI-talic.woff",
+			"woff2": "OpenDyslexic/OpenDyslexic-Bold-Italic.woff2?b08af"
 		},
 		"OpenDyslexic Italic": {
 			"fontstyle": "italic",
-			"woff": "OpenDyslexic/OpenDyslexic-Italic.woff?9fa06",
-			"woff2": "OpenDyslexic/OpenDyslexic-Italic.woff2?14d96"
+			"woff": "OpenDyslexic/OpenDyslexic-Italic.woff?999a0",
+			"woff2": "OpenDyslexic/OpenDyslexic-Italic.woff2?7415e"
 		},
 		"OskiEast": {
 			"woff": "OskiEast/oskie.woff?10d59",

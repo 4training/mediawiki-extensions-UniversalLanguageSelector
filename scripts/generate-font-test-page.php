@@ -1,10 +1,15 @@
 <?php
 /**
- *
  * @author Niklas Laxström
  * @license GPL-2.0-or-later
  * @file
  */
+
+namespace UniversalLanguageSelector;
+
+use FormatJson;
+use Html;
+use Maintenance;
 
 // Standard boilerplate to define $IP
 if ( getenv( 'MW_INSTALL_PATH' ) !== false ) {
@@ -35,6 +40,9 @@ class GenerateFontTestPage extends Maintenance {
 		$body = '';
 
 		foreach ( $list['languages'] as $code => $fonts ) {
+			if ( !isset( $corpus[$code] ) ) {
+				continue;
+			}
 			foreach ( $fonts as $fontname ) {
 				if ( $fontname === 'system' ) {
 					continue;
@@ -93,5 +101,5 @@ HTML;
 	}
 }
 
-$maintClass = 'GenerateFontTestPage';
+$maintClass = GenerateFontTestPage::class;
 require_once RUN_MAINTENANCE_IF_MAIN;

@@ -45,7 +45,7 @@
 		'<div class="twelve columns">' +
 		'<div class="uls-input-settings-inputmethods-list">' +
 		// "Input settings for language xyz" title
-		'<h4 class="ext-uls-input-settings-imes-title"></h4>' +
+		'<h4 class="uls-input-settings-imes-title"></h4>' +
 		'</div>' +
 		'</div>' +
 		'</div>' +
@@ -64,7 +64,6 @@
 		this.$template = $( template );
 		this.uiLanguage = this.getInterfaceLanguage();
 		this.contentLanguage = this.getContentLanguage();
-		this.$imes = null;
 		this.$parent = $parent;
 		// ime system is lazy loaded, make sure it is initialized
 		mw.ime.init();
@@ -84,7 +83,6 @@
 
 			this.dirty = false;
 			this.$parent.$settingsPanel.empty();
-			this.$imes = $( document.body ).data( 'ime' );
 			this.$parent.$settingsPanel.append( this.$template );
 			$enabledOnly = this.$template.find( '.enabled-only' );
 			if ( $.ime.preferences.isEnabled() ) {
@@ -120,7 +118,7 @@
 
 			imes = $.ime.languages[ language ];
 
-			$imeListTitle = this.$template.find( '.ext-uls-input-settings-imes-title' );
+			$imeListTitle = this.$template.find( '.uls-input-settings-imes-title' );
 			$imeListContainer = this.$template.find( '.uls-input-settings-inputmethods-list' );
 
 			$imeListContainer.empty();
@@ -273,16 +271,16 @@
 
 			function buttonHandler( button ) {
 				return function () {
-					var language = button.data( 'language' );
+					var selectedLang = button.data( 'language' );
 
-					if ( language !== $.ime.preferences.getLanguage() ) {
+					if ( selectedLang !== $.ime.preferences.getLanguage() ) {
 						inputSettings.markDirty();
-						$.ime.preferences.setLanguage( language );
+						$.ime.preferences.setLanguage( selectedLang );
 					}
 					// Mark the button selected
 					$( '.uls-ui-languages .mw-ui-button' ).removeClass( 'mw-ui-pressed' );
 					button.addClass( 'mw-ui-pressed' );
-					inputSettings.prepareInputmethods( language );
+					inputSettings.prepareInputmethods( selectedLang );
 				};
 			}
 

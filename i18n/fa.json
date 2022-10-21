@@ -2,13 +2,16 @@
 	"@metadata": {
 		"authors": [
 			"Armin1392",
+			"Beginneruser",
 			"Calak",
 			"Ebraminio",
 			"FarsiNevis",
+			"Jeeputer",
 			"Ladsgroup",
 			"Mahan",
 			"Mehran",
 			"Mjbmr",
+			"Mojtabakd",
 			"Reza1615"
 		]
 	},
@@ -31,8 +34,8 @@
 	"ext-uls-display-settings-font-settings": "تنظیمات قلم",
 	"ext-uls-display-settings-ui-language": "نمایش زبان",
 	"ext-uls-display-settings-anon-label": "نمایش زبان",
-	"ext-uls-display-settings-anon-same-as-content": "$1 (به مانند مطالب)",
-	"ext-uls-display-settings-anon-log-in-cta": " [[Special:UserLogin|ورود]] برای انتخاب زبان متفاوتی برای منوها.",
+	"ext-uls-display-settings-anon-same-as-content": "$1 (مثل محتوا)",
+	"ext-uls-display-settings-anon-log-in-cta": "برای انتخاب یک زبان متفاوت برای منوها [[Special:UserLogin|به سامانه وارد شوید]].",
 	"ext-uls-webfonts-settings-title": "دریافت قلم‌های مورد نیاز",
 	"ext-uls-webfonts-settings-info": "دریافت خودکار قلم‌های ناموجود و اجازهٔ انتخاب قلم‌های ترجیح‌داده‌شده.",
 	"ext-uls-webfonts-settings-info-link": "اطلاعات بیشتر",
@@ -62,7 +65,7 @@
 	"ext-uls-input-disable-notification-info-personal": "در هر زمان می‌توانید ابزارهای ورودی را از بخش تنظیمات زبان فعال کنید.",
 	"ext-uls-input-disable-notification-info-interlanguage": "در هر زمان می توانید ابزارهای ورودی را از بخش تنظیمات زبان در کنار فهرست زبان‌ها فعال است.",
 	"ext-uls-language-settings-applying": "اعمال کردن...",
-	"ext-uls-compact-link-count": "{{PLURAL:$1|یک مورد دیگر|$1 مورد دیگر}}",
+	"ext-uls-compact-link-count": "{{PLURAL:$1|یک مورد دیگر|$1 زبان دیگر}}",
 	"ext-uls-compact-link-info": "همه زبان‌ها (انتخاب اولیه از انتخاب‌های مشترک شما و دیگران)",
 	"prefs-languages": "زبان‌ها",
 	"ext-uls-compact-language-links-preference": "استفاده از [[$1|فهرست فشرده زبان]]، همراه با زبان‌های مرتبط با شما",
@@ -72,5 +75,10 @@
 	"ext-uls-setlang-heading": "زبان رابط کاربری را تغییر می‌دهید؟",
 	"ext-uls-setlang-accept": "پذیرفتن تغییرات",
 	"ext-uls-setlang-loading": "در حال اعمال...",
-	"ext-uls-setlang-cancel": "تغییر نده"
+	"ext-uls-setlang-cancel": "تغییر نده",
+	"ext-uls-actions-menu-header": "گزینه‌های بیشتر",
+	"ext-uls-actions-menu-language-settings-item-label": "تنظیمات زبان را باز کن",
+	"ext-uls-empty-state-header": "هنوز زبانی موجود نیست",
+	"ext-uls-empty-state-header-actions-available": "هنوز زبانی موجود نیست. می‌خواهید یکی اضافه کنید؟",
+	"ext-uls-empty-state-desc-actions-available": "محتوا را به زبان‌های بیشتری در دسترس قرار دهید."
 }

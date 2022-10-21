@@ -1,5 +1,5 @@
 /*!
- * Loaded when setlang query paramter is set on the page.
+ * Loaded when setlang query parameter is set on the page.
  *
  * @private
  * @since 2020.01
@@ -31,12 +31,12 @@
 	}
 
 	function getMessage( languageName, languageCode ) {
-		return $( '<p>' ).html(
+		return $( '<p>' ).append(
 			mw.message(
 				'ext-uls-setlang-message',
 				languageName,
 				languageCode
-			).parse()
+			).parseDom()
 		);
 	}
 
