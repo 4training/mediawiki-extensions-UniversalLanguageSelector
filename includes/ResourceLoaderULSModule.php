@@ -40,9 +40,9 @@ class ResourceLoaderULSModule extends ResourceLoaderModule {
 	 */
 	private function getData( $languageCode ) {
 		$vars = [];
-        // #custom4training: only some languages are available for user interface language selection                                                                                                               
+        // #custom4training: only some languages are available for user interface language selection
         // TODO: This alone is not sufficient anymore to reduce the number of available languages. Remove this? Or does this save some performance? Investigate that more thoroughly...
-        $availableLanguages = array('de','en','tr','sq','fa','ar','ku','ku-sinj','ru','ru-cars','ss','pt','pt-br','ms','es','fr','ro','hu','ur','vi','ur','pl','cs','id','zh','ko','bg','it','az','sw','ps','rn','sk','sl','hr','te','ka','uk','ky','et','ti','xh','af','sv','ckb','tr-tanri','ta','th','uz','uz-cyrl','ar-urdun','ha','hi','ml','kn','nl','sr','nb');
+        $availableLanguages = array('de','en','tr','sq','fa','ar','ku','ku-sinj','ru','ru-cars','ss','pt','pt-br','ms','es','fr','ro','hu','ur','vi','ur','pl','cs','id','zh','ko','bg','it','az','sw','ps','rn','sk','sl','hr','te','ka','uk','ky','et','ti','xh','af','sv','ckb','tr-tanri','ta','th','uz','uz-cyrl','ar-urdun','ha','hi','ml','kn','nl','sr','nb','lg');
         foreach ($availableLanguages as $lang) {
             $vars['wgULSLanguages'][$lang] = Language::fetchLanguageName($lang);
         }
